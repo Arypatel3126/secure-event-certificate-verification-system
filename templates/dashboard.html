@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Secure Certificate System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+            <h2 class="h4 mb-0 fw-bold text-dark">Admin Dashboard</h2>
+            <a href="{{ url_for('generate_certificate') }}" class="btn btn-university">
+                <i class="bi bi-plus-circle me-2"></i>Generate Certificate
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-collection me-2"></i> Recent Certificates
+            </div>
+            <div class="card-body p-0">
+                {% if certificates %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Participant</th>
+                                <th>University ID</th>
+                                <th>Event Name</th>
+                                <th>Issue Date</th>
+                                <th>Certificate ID</th>
+                                <th>Verify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cert in certificates %}
+                            <tr>
+                                <td>{{ cert.participant_name }}</td>
+                                <td>{{ cert.university_id }}</td>
+                                <td>{{ cert.event_name }}</td>
+                                <td>{{ cert.issue_date.strftime('%Y-%m-%d') }}</td>
+                                <td><code class="small">{{ cert.certificate_id[:8] }}...</code></td>
+                                <td>
+                                    <a href="{{ url_for('verify_by_id', certificate_id=cert.certificate_id) }}" class="btn btn-sm btn-outline-primary">Verify</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                    <p class="mt-2 mb-0">No certificates yet.</p>
+                    <a href="{{ url_for('generate_certificate') }}" class="btn btn-university mt-3">Generate your first certificate</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

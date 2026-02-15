@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Certificate - Secure Certificate System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-search me-2"></i> Verify Certificate
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('verify') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="certificate_id" class="form-label">Certificate ID</label>
+                        <input type="text" class="form-control" id="certificate_id" name="certificate_id" placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000">
+                    </div>
+                    <button type="submit" class="btn btn-university w-100">Verify</button>
+                </form>
+            </div>
+        </div>
+
+        {% if result is not none %}
+        <div class="card verify-{{ result.status }}">
+            <div class="card-body p-4">
+                <h5 class="card-title mb-4">Verification Result</h5>
+                <dl class="row mb-0">
+                    {% if result.certificate %}
+                    <dt class="col-sm-4">Certificate ID:</dt>
+                    <dd class="col-sm-8"><code>{{ result.certificate.certificate_id }}</code></dd>
+                    <dt class="col-sm-4">Participant Name:</dt>
+                    <dd class="col-sm-8">{{ result.certificate.participant_name }}</dd>
+                    <dt class="col-sm-4">University ID:</dt>
+                    <dd class="col-sm-8">{{ result.certificate.university_id }}</dd>
+                    <dt class="col-sm-4">Event Name:</dt>
+                    <dd class="col-sm-8">{{ result.certificate.event_name }}</dd>
+                    <dt class="col-sm-4">Issue Date:</dt>
+                    <dd class="col-sm-8">{{ result.certificate.issue_date.strftime('%B %d, %Y') }}</dd>
+                    {% endif %}
+                    <dt class="col-sm-4 fw-bold">Status:</dt>
+                    <dd class="col-sm-8 fw-bold {% if result.status == 'valid' %}text-success{% elif result.status == 'tampered' %}text-warning{% else %}text-danger{% endif %}">
+                        {% if result.status == 'valid' %}VALID{% elif result.status == 'tampered' %}Tampered Certificate{% else %}Invalid Certificate{% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

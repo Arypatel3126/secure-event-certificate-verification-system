@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Secure Certificate System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-dark mb-3">Secure Digital Certificate Verification System</h1>
+            <p class="lead text-muted">Generate and verify tamper-proof digital certificates with cryptographic validation and QR codes.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-search text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Verify Certificate</h5>
+                        <p class="card-text text-muted">Check the authenticity of a certificate using its unique ID.</p>
+                        <a href="{{ url_for('verify') }}" class="btn btn-university">Verify Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="card h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-shield-lock text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Admin Portal</h5>
+                        <p class="card-text text-muted">Generate new certificates. Admin login required.</p>
+                        <a href="{{ url_for('admin_login') }}" class="btn btn-outline-secondary">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <div class="card-header">
+                <i class="bi bi-check2-circle me-2"></i> Features
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-shield-check text-success mt-1"></i>
+                            <span>Cryptographic verification with SHA-256 hashes</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-upc-scan text-success mt-1"></i>
+                            <span>Unique UUID for each certificate</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-qr-code text-success mt-1"></i>
+                            <span>QR code embedded in PDF for instant verification</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-file-earmark-pdf text-success mt-1"></i>
+                            <span>Professional PDF generation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
